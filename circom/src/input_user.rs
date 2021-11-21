@@ -37,7 +37,10 @@ const WAT: &'static str = "wat";
 const WASM: &'static str = "wasm";
 const CPP: &'static str = "cpp";
 const JS: &'static str = "js";
+#[cfg(not(windows))]
 const DAT: &'static str = "dat";
+#[cfg(windows)]
+const DAT: &'static str = "exe.dat";
 const SYM: &'static str = "sym";
 const JSON: &'static str = "json";
 

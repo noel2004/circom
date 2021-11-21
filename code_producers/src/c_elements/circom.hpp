@@ -12,6 +12,10 @@
 typedef unsigned long long u64;
 typedef uint32_t u32;
 typedef uint8_t u8;
+//uint is induced by glibc so mingw64 has no this defination
+#ifdef __MINGW32__
+typedef unsigned int uint;
+#endif
 
 //only for the main inputs
 struct __attribute__((__packed__)) HashSignalPair {

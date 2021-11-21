@@ -800,9 +800,9 @@ pub fn generate_make_file(c_folder: &PathBuf, run_name: &str, producer: &CProduc
     code = format!("{}\n", code);
     code = format!("{}{}: $(DEPS_O) {}.o\n", code, run_name, run_name);
     if producer.has_parallelism {
-	    code = format!("{}\t$(CC) -o {} *.o -lgmp -pthread\n", code, run_name);
+	    code = format!("{}\t$(CC) -o {} *.o -lgmp -pthread $(LDFLAGS)\n", code, run_name);
     } else {
-	    code = format!("{}\t$(CC) -o {} *.o -lgmp\n", code, run_name);
+	    code = format!("{}\t$(CC) -o {} *.o -lgmp $(LDFLAGS)\n", code, run_name);
     }
     let mut file_path  = c_folder.clone();
     file_path.push("Makefile");

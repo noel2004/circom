@@ -2,6 +2,7 @@ use super::errors::FileOsError;
 use program_structure::error_definition::Report;
 use std::collections::HashSet;
 use std::path::PathBuf;
+use normpath::PathExt;
 
 pub struct FileStack {
     current_location: PathBuf,
@@ -19,9 +20,11 @@ impl FileStack {
     pub fn add_include(f_stack: &mut FileStack, path: String) -> Result<(), Report> {
         let mut crr = f_stack.current_location.clone();
         crr.push(path.clone());
-        let path = std::fs::canonicalize(crr)
+
+        let path = crr.as_path().normalize()
             .map_err(|_| FileOsError { path: path.clone() })
             .map_err(|e| FileOsError::produce_report(e))?;
+        let path = path.into_path_buf();
         if !f_stack.black_paths.contains(&path) {
             f_stack.stack.push(path);
         }
